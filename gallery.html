@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- Referenced as an example from by rabidGadfly.com -->
+<!-- http://rabidgadfly.com/2013/03/super-easy-angular-image-gallery/ -->
+
+<!-- Define this as an AngularJS app that uses the module named galleryApp -->
+<html ng-app="galleryApp">
+
+<head>
+    <title>10m.ODC Gallery Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/examples/starter-template/starter-template.css">
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <div class="container" ng-controller="GalleryController" >
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">10m.ODC Demo</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li ><a href="index.html">Archive</a></li>
+                <li ><a href="list.html">List</a></li>
+                <li class="active"><a href="gallery.html">Gallery</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+        
+        
+        
+        <h1>ODC Image Gallery</h1>
+<!--    Layout the large images horizontally using viewwindow
+        to hide the overflow (all but the current image). -->
+        <div class="col-md-8">
+        <!--    fullscroller is referenced from the Controller js
+                to control scrolling -->
+
+                <img ng-src="http://{{server}}/odc/v1/{{repository}}/document/{{selected.odcID}}" class="img-responsive"  />
+        </div>
+        
+        <!-- Display the description of the current image -->
+        <div class="col-md-4">
+            <table class="table table-striped table-bordered">
+                    <tr ng-repeat="(key, value) in selected.displayValues">
+                        <td>{{key}} </td> <td> {{ value }} </td>
+                    </tr>
+            </table>
+        </div>
+        
+        
+<!--    Layout the large images horizontally using viewwindow
+        to hide the overflow (all but the current image). -->
+        <div class="col-md-8">
+            <div class="row">
+            <!--    Iterate through all images and display them end to end as thumbs -->
+                    <div class="col-xs-3" ng-repeat="doc in docs">
+                    <!--    Note ng-click here calls the scrollTo function found in the
+                            controller and passes it its index. This is used to scroll 
+                            the large image to the correct image -->
+                            <a ng-href="" ng-click="scrollTo(doc,$index)" class="thumbnail">
+                                <img  ng-src="http://{{server}}/odc/v1/{{repository}}/document/{{doc.odcID}}"  />
+                            </a>
+                    </div>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+
+</html>
