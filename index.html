@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>ODC Upload Demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="http://getbootstrap.com/examples/starter-template/starter-template.css">
+  
+  <script type="text/javascript" src="angular-base64-upload.js"></script>
+  <script type="text/javascript">
+    angular.module('myApp', ['naif.base64'])
+      .controller('ctrl', function($scope, $http, $window){
+      
+      $scope.uploadFile = function(){
+          
+          var uploadData = {};
+          uploadData.fileName = $scope.image.filename;
+          uploadData.encodedContent = $scope.image.base64;
+          uploadData.async = true;
+          
+          var fields = {};
+          fields.no = $scope.no;
+          
+          uploadData.fields = fields;
+          $http.defaults.headers.common['Authorization'] = 'Basic b2RjOm9kYw==';
+      
+          $http({
+            url: 'http://odcdemo.10m.local/odc/v1/ODC_WS_TEST_TXT/document',
+            dataType: 'json',
+            method: 'POST',
+            data: uploadData,
+            //withCredentials: true,
+            headers: {
+                "Content-Type": "application/json"
+            }
+
+        }).success(function(res){
+          alert('Created docment with id '+res.odcId);
+        }).error(function(res) {
+            alert("Archiving failed "+  JSON.Stringify(res));
+        })
+      }
+    })
+  </script>
+</head>
+<body ng-controller="ctrl">
+
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">10m.ODC Demo</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active" ><a href="index.html">Archive</a></li>
+            <li ><a href="list.html">List</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+  <form>
+    <div class="form-group">
+    <label for="invoiceno">Image No</label>
+    <input type="text" ng-model="no" name="invoiceno">
+    </div
+    <div class="form-group">
+    <label for="file">Upload Image</label>
+    <input type="file" ng-model="image" name="file" base-sixty-four-input>
+    <img base-sixty-four-image="image" base-sixty-four-image-placeholder="placeholder.png" alt="" width="300">
+    </div>
+    <div class="form-group">
+        <button type="submit" ng-click="uploadFile()">Submit</button>
+    </div>
+  </form>
+      </div>
+
+    </div><!-- /.container -->
+
+</body>
+</html>
