@@ -48,7 +48,7 @@
         <!--    fullscroller is referenced from the Controller js
                 to control scrolling -->
 
-                <img ng-src="http://{{server}}/odc/v1/{{repository}}/document/{{selected.odcID}}" class="img-responsive"  />
+                <img ng-src="http://{{server}}/odc/retrieve/img.jpg?folder={{folder}}&instance={{instance}}&attachment=false&q_odc_id={{selected.odcID}}" class="img-responsive"  />
         </div>
         
         <!-- Display the description of the current image -->
@@ -71,7 +71,7 @@
                             controller and passes it its index. This is used to scroll 
                             the large image to the correct image -->
                             <a ng-href="" ng-click="scrollTo(doc,$index)" class="thumbnail">
-                                <img  ng-src="http://{{server}}/odc/v1/{{repository}}/document/{{doc.odcID}}"  />
+                                <img ng-src="http://{{server}}/odc/retrieve/img.jpg?folder={{folder}}&instance={{instance}}&attachment=false&q_odc_id={{doc.odcID}}"  />
                             </a>
                     </div>
             </div>

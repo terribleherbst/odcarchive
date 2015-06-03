@@ -21,6 +21,8 @@ angular.module('galleryApp', [])
           }
 		}).success(function(data, status, headers, config) {
                $scope.server = 'odcdemo.10m.local';
+               $scope.instance = 'ODWIN';
+               $scope.folder = 'ODC_WS_TEST';
                $scope.repository = 'ODC_WS_TEST_TXT';               
 		    	$scope.docs = data.hitlist;                  //set view model
 		}).error(function(data, status, headers, config) {

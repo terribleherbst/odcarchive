@@ -35,6 +35,8 @@
               }
   			}).success(function(data, status, headers, config) {
                 $scope.server = 'odcdemo.10m.local';
+                $scope.instance = 'ODWIN';
+                $scope.folder = 'ODC_WS_TEST';
                 $scope.repository = 'ODC_WS_TEST_TXT';
     		   $scope.docs = data.hitlist;                  //set view model
   			}).error(function(data, status, headers, config) {
@@ -82,7 +84,11 @@
            <tr ng-repeat="doc in docs">
                <td>{{doc.displayValues.no}}</td>
 
-               <td><a href="http://{{server}}/odc/v1/{{repository}}/document/{{doc.odcID}}"> <img ng-src="http://{{server}}/odc/v1/{{repository}}/document/{{doc.odcID}}" width="300"></a> </td>
+               <td><a href="http://{{server}}/odc/v1/{{repository}}/document/{{doc.odcID}}"> 
+                   <img ng-src="http://{{server}}/odc/retrieve/img.jpg?folder={{folder}}&instance={{instance}}&attachment=false&q_odc_id={{doc.odcID}}" width="300"/>
+                   
+               
+               </a> </td>
            </tr>
            </tbody>
        </table>
