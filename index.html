@@ -14,6 +14,13 @@
   <script type="text/javascript" src="angular-base64-upload.js"></script>
   <script type="text/javascript">
     angular.module('myApp', ['naif.base64'])
+      .config(['$httpProvider', function($httpProvider) {
+          //$httpProvider.defaults.useXDomain = true;
+          $httpProvider.defaults.headers.common.Authorization = 'Basic b2RjOjEwbVBhJCR3MHJk';
+          $httpProvider.defaults.withCredentials = true;
+          delete $httpProvider.defaults.headers.common['X-Requested-With'];
+                }
+      ])
       .controller('ctrl', function($scope, $http, $window){
       
       $scope.uploadFile = function(){
@@ -27,14 +34,12 @@
           fields.no = $scope.no;
           
           uploadData.fields = fields;
-          $http.defaults.headers.common['Authorization'] = 'Basic b2RjOm9kYw==';
-      
+
           $http({
-            url: 'http://odcdemo.10m.local/odc/v1/ODC_WS_TEST_TXT/document',
+            url: 'http://odcdemo.10m.local/odc/v1/ODC_WS_TEST_TXT//document',
             dataType: 'json',
             method: 'POST',
             data: uploadData,
-            //withCredentials: true,
             headers: {
                 "Content-Type": "application/json"
             }
@@ -42,7 +47,7 @@
         }).success(function(res){
           alert('Created docment with id '+res.odcId);
         }).error(function(res) {
-            alert("Archiving failed "+  JSON.Stringify(res));
+            alert("Archiving failed "+  JSON.stringify(res));
         })
       }
     })

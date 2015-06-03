@@ -14,18 +14,24 @@
   
   
   <script type="text/javascript">
-    angular.module('myApp', []).controller('ctrl', function($scope, $http, $window){
+    angular.module('myApp', [])
+  .config(['$httpProvider', function($httpProvider) {
+      $httpProvider.defaults.headers.common.Authorization = 'Basic b2RjOjEwbVBhJCR3MHJk';
+      $httpProvider.defaults.withCredentials = true;
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
+            }
+  ])
+  
+  .controller('ctrl', function($scope, $http, $window){
       
  		$scope.searchDocs = function() {
-            $http.defaults.headers.common['Authorization'] = 'Basic b2RjOm9kYw==';
-      
             $http({
               url: 'http://odcdemo.10m.local/odc/v1/ODC_WS_TEST_TXT/hits/ODC_WS_TEST',
               dataType: 'json',
               method: 'GET',
-              //withCredentials: true,
+              withCredentials: true,
               headers: {
-                  "Content-Type": "application/json"
+                  "Content-Type": "application/json",
               }
   			}).success(function(data, status, headers, config) {
                 $scope.server = 'odcdemo.10m.local';
