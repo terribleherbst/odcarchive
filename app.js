@@ -1,14 +1,21 @@
-angular.module('galleryApp', []).controller('GalleryController', function($scope, $http, $window){
+angular.module('galleryApp', [])
+.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.headers.common.Authorization = 'Basic b2RjOjEwbVBhJCR3MHJk';
+    $httpProvider.defaults.withCredentials = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+}
+])
+
+
+.controller('GalleryController', function($scope, $http, $window){
      var IMAGE_WIDTH = 405;
   
 	$scope.searchDocs = function() {
-        $http.defaults.headers.common['Authorization'] = 'Basic b2RjOm9kYw==';
   
         $http({
           url: 'http://odcdemo.10m.local/odc/v1/ODC_WS_TEST_TXT/hits/ODC_WS_TEST',
           dataType: 'json',
           method: 'GET',
-          withCredentials: true,
           headers: {
               "Content-Type": "application/json"
           }
